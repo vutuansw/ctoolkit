@@ -90,10 +90,20 @@
     -webkit-transform: rotate(360deg) translateZ(0);
     transform: rotate(360deg) translateZ(0); } }
 
-.ctoolkit-typography .subrow:after, .select2-container .selection .select2-selection.select2-selection--multiple ul .select2-selection__choice:after, .ctoolkit-field .icons-selector .selector:after {
+.ctoolkit-typography .subrow:after, .ctoolkit-image_picker .attached_images:after, .ctoolkit-image_picker .image_list:after, .select2-container .selection .select2-selection.select2-selection--multiple ul .select2-selection__choice:after, .ctoolkit-field .icons-selector .selector:after {
   content: '';
   display: table;
   clear: both; }
+
+.ctoolkit-image_picker .image_list li .remove, .ctoolkit-image_background .attachment-media-view .remove {
+  background: url(../images/remove.png) center center no-repeat;
+  width: 22px;
+  height: 22px;
+  display: block;
+  position: absolute; }
+  .ctoolkit-image_picker .image_list li .remove:hover, .ctoolkit-image_background .attachment-media-view .remove:hover {
+    opacity: .7;
+    filter: alpha(opacity=70); }
 
 .ctoolkit-typography {
   padding: 5px 10px;
@@ -119,6 +129,146 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     margin: 5px 0px; }
+    .ctoolkit-typography .subrow > div > input {
+      height: 29px; }
+
+.ctoolkit-image_picker .image_list {
+  margin: 0;
+  padding: 0;
+  cursor: move;
+  float: left; }
+
+.ctoolkit-image_picker .image_list li {
+  position: relative;
+  background: #F5F5F5;
+  padding: 0;
+  float: left;
+  margin: 0 5px 5px 0;
+  height: 80px;
+  width: 80px;
+  line-height: 75px;
+  text-align: center;
+  border: 1px solid #DFDFDF;
+  overflow: hidden; }
+
+.ctoolkit-image_picker .image_list li .inner {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  text-align: center; }
+
+.ctoolkit-image_picker .image_list li .remove {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); }
+
+.ctoolkit-image_picker .image_list li img {
+  max-height: 80px;
+  display: inline-block;
+  vertical-align: middle;
+  width: auto;
+  height: auto; }
+
+.ctoolkit-image_picker .add_images {
+  color: #C8C8C8;
+  border-color: #C8C8C8;
+  text-decoration: none;
+  margin-top: 0;
+  display: block;
+  float: left;
+  height: 80px;
+  width: 80px;
+  background: url(../images/add.png) center center no-repeat #F5F5F5;
+  border: 1px solid #DFDFDF;
+  font-size: 0; }
+  .ctoolkit-image_picker .add_images:hover {
+    color: #C8C8C8;
+    border-color: #C8C8C8;
+    text-decoration: none; }
+
+.ctoolkit-image_background {
+  width: 600px;
+  max-width: 100%; }
+
+.ctoolkit-image_background .attachment-media-view {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative; }
+
+.ctoolkit-image_background .attachment-media-view .remove {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  display: none; }
+
+.ctoolkit-image_background .placeholder {
+  width: 100%;
+  position: relative;
+  text-align: center;
+  cursor: default;
+  border: 1px dashed #b4b9be;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 40px 0;
+  line-height: 20px;
+  font-size: 14px;
+  background-color: #fbfbfb; }
+
+.ctoolkit-image_background .added .placeholder {
+  opacity: 0;
+  visibility: hidden; }
+
+.ctoolkit-image_background .added .remove {
+  display: block; }
+
+.ctoolkit-image_background .button {
+  float: right;
+  margin-top: 10px;
+  margin-left: 10px; }
+
+.ctoolkit-multitext .multitext-item {
+  position: relative;
+  background: #f9f9f9;
+  padding: 3px 59px 3px 3px;
+  border: 1px solid #ddd; }
+
+.ctoolkit-multitext .multitext-item a {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  top: 3px;
+  right: 3px;
+  font-size: 0;
+  position: absolute; }
+
+.ctoolkit-multitext .multitext-item a.remove {
+  background-image: url(../images/remove.png);
+  right: 31px; }
+
+.ctoolkit-multitext .multitext-item a.short {
+  background-image: url(../images/move.png);
+  background-size: 12px 12px;
+  cursor: move; }
+
+.ctoolkit-multitext .multitext-item a:hover {
+  background-color: #fdf7cb; }
+
+.ctoolkit-multitext .bottom-row {
+  text-align: right;
+  margin-top: 3px; }
+
+.ctoolkit-multitext a.addnew {
+  font-weight: bold; }
 
 .ctoolkit-icon_picker .icons-selector .selector-search i {
   top: 12px; }

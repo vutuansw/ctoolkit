@@ -25,10 +25,14 @@
             padding: 0px 5px;
             box-sizing: border-box;
             margin:5px 0px;
+            &>input{
+                height: 29px;
+            }
         }
         &:after{
             @extend %clearfix;
         }
+
     }
 
 

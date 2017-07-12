@@ -8,9 +8,9 @@ namespace ctoolkit\field;
  * @class     Typography
  * @package   ctoolkit\field
  * @category  Class
- * @author    vutuansw
+ * @author    vutuansw <vutuan.sw@gmail.com>
  * @license   GPLv3
- * @version   1.0
+ * @since   1.0
  */
 
 /**
@@ -27,6 +27,11 @@ class Typography extends \WP_Customize_Control {
 	 * @var array Typography default options
 	 */
 	public $default;
+
+	/**
+	 * @var array Typography settings
+	 */
+	public $setting;
 
 	/**
 	 * Constructor.
@@ -46,6 +51,12 @@ class Typography extends \WP_Customize_Control {
 		} else {
 			$this->default = array();
 		}
+
+		if ( !empty( $args['setting'] ) && is_array( $args['setting'] ) ) {
+			$this->setting = $args['setting'];
+		} else {
+			$this->setting = array();
+		}
 	}
 
 	/**
@@ -59,7 +70,8 @@ class Typography extends \WP_Customize_Control {
 		$args = array(
 			'type' => $this->type,
 			'customize_link' => $this->get_link(),
-			'default' => $this->default
+			'default' => $this->default,
+			'settings' => $this->settings
 		);
 
 		if ( !empty( $this->description ) ) {
@@ -95,10 +107,11 @@ class Typography extends \WP_Customize_Control {
 		if ( !empty( $value ) && is_string( $value ) ) {
 			$data = json_decode( urldecode( $value ), true );
 		} else if ( is_array( $value ) ) {
-			if ( !empty( $value['variants'] ) ) {
+			if ( !empty( $value['variants'] ) && is_array( $value['variants'] ) ) {
+
 				$value['variants'] = implode( ',', $value['variants'] );
 			}
-			if ( !empty( $value['subsets'] ) ) {
+			if ( !empty( $value['subsets'] ) && is_array( $value['subsets'] ) ) {
 				$value['subsets'] = implode( ',', $value['subsets'] );
 			}
 
@@ -116,14 +129,16 @@ class Typography extends \WP_Customize_Control {
 		$output .= '<select></select>';
 		$output .= '</div>';
 
+		$variant_multiple = empty( $settings['setting']['variant_multiple'] ) ? '' : 'multiple';
 		$output .= '<div class="variants">';
 		$output .= sprintf( '<label>%s</label>', __( 'Variants', 'ctoolkit' ) );
-		$output .= sprintf( '<select placeholder="%s" multiple>%s</select>', __( 'Select Variants...', 'ctoolkit' ), '' );
+		$output .= sprintf( '<select placeholder="%s" %s>%s</select>', __( 'Select Variants...', 'ctoolkit' ), $variant_multiple, '' );
 		$output .= '</div>';
 
+		$subset_multiple = empty( $settings['setting']['subset_multiple'] ) ? '' : 'multiple';
 		$output .= '<div class="subsets">';
 		$output .= sprintf( '<label>%s</label>', __( 'Subsets', 'ctoolkit' ) );
-		$output .= sprintf( '<select placeholder="%s" multiple>%s</select>', __( 'Select Subsets...', 'ctoolkit' ), '' );
+		$output .= sprintf( '<select placeholder="%s" %s>%s</select>', __( 'Select Subsets...', 'ctoolkit' ), $subset_multiple, '' );
 		$output .= '</div>';
 
 		$output .= '<div class="subrow">';
@@ -132,7 +147,7 @@ class Typography extends \WP_Customize_Control {
 			$output .= '<div class="line_height">';
 			$output .= sprintf( '<label>%s</label>', __( 'Light Height', 'ctoolkit' ) );
 			$line_height = isset( $data['line-height'] ) ? $data['line-height'] : '';
-			$output .= sprintf( '<input type="text" value="%s" data-key="line-height"/>', $line_height );
+			$output .= sprintf( '<input type="text" value="%s" data-key="line-height" placeholder="%s"/>', $line_height, __( '1.4em', 'ctoolkit' ) );
 			$output .= '</div>';
 		}
 
@@ -141,7 +156,7 @@ class Typography extends \WP_Customize_Control {
 			$output .= '<div class="font_size">';
 			$output .= sprintf( '<label>%s</label>', __( 'Font Size', 'ctoolkit' ) );
 			$font_size = isset( $data['font-size'] ) ? $data['font-size'] : '';
-			$output .= sprintf( '<input type="text" value="%s" data-key="font-size"/>', $font_size );
+			$output .= sprintf( '<input type="text" value="%s" data-key="font-size" placeholder="%s"/>', $font_size, __( '14px', 'ctoolkit' ) );
 			$output .= '</div>';
 		}
 
@@ -149,7 +164,7 @@ class Typography extends \WP_Customize_Control {
 			$output .= '<div class="letter_spacing">';
 			$output .= sprintf( '<label>%s</label>', __( 'Letter Spacing', 'ctoolkit' ) );
 			$letter_spacing = isset( $data['letter-spacing'] ) ? $data['letter-spacing'] : '';
-			$output .= sprintf( '<input type="text" value="%s" data-key="letter-spacing"/>', $letter_spacing );
+			$output .= sprintf( '<input type="text" value="%s" data-key="letter-spacing" placeholder="%s"/>', $letter_spacing, __( '1px', 'ctoolkit' ) );
 			$output .= '</div>';
 		}
 
@@ -172,9 +187,19 @@ class Typography extends \WP_Customize_Control {
 			}
 
 			$output .= '</select>';
+			$output .= '</div>';
 		}
 
-		$output .= '</div>';
+
+		if ( isset( $subfields['color'] ) ) {
+			$color = isset( $data['color'] ) ? $data['color'] : '';
+
+			$output .= '<div class="color">';
+			$output .= sprintf( '<label>%s</label>', __( 'Color', 'ctoolkit' ) );
+			$output .= sprintf( '<input type="text" value="%2$s" data-key="color" data-default-color="%1$s" />', $subfields['color'], $color );
+			$output .= '</div>';
+		}
+
 
 		$output .= '</div>';
 		$output .= '</div>';

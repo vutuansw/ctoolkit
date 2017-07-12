@@ -116,21 +116,21 @@ if ( !class_exists( 'Fonts' ) ) {
 		 * @return array    Standard websafe fonts.
 		 */
 		public static function get_standard_fonts() {
-			$i18n = l10n_get_strings();
 			$standard_fonts = array(
 				'serif' => array(
-					'label' => $i18n['serif'],
+					'label' => 'Serif',
 					'stack' => 'Georgia,Times,"Times New Roman",serif',
 				),
 				'sans-serif' => array(
-					'label' => $i18n['sans-serif'],
+					'label' => 'Sans Serif',
 					'stack' => 'Helvetica,Arial,sans-serif',
 				),
 				'monospace' => array(
-					'label' => $i18n['monospace'],
+					'label' => 'Monospace',
 					'stack' => 'Monaco,"Lucida Sans Typewriter","Lucida Typewriter","Courier New",Courier,monospace',
 				),
 			);
+			
 			return apply_filters( 'ctoolkit_standard_fonts', $standard_fonts );
 		}
 
@@ -198,23 +198,23 @@ if ( !class_exists( 'Fonts' ) ) {
 		 * @return array
 		 */
 		public static function get_google_font_subsets() {
-			$i18n = l10n_get_strings();
 			return array(
-				'cyrillic' => $i18n['cyrillic'],
-				'cyrillic-ext' => $i18n['cyrillic-ext'],
-				'devanagari' => $i18n['devanagari'],
-				'greek' => $i18n['greek'],
-				'greek-ext' => $i18n['greek-ext'],
-				'khmer' => $i18n['khmer'],
-				'latin-ext' => $i18n['latin-ext'],
-				'vietnamese' => $i18n['vietnamese'],
-				'hebrew' => $i18n['hebrew'],
-				'arabic' => $i18n['arabic'],
-				'bengali' => $i18n['bengali'],
-				'gujarati' => $i18n['gujarati'],
-				'tamil' => $i18n['tamil'],
-				'telugu' => $i18n['telugu'],
-				'thai' => $i18n['thai'],
+				'cyrillic' => 'Cyrillic',
+				'cyrillic-ext' => 'Cyrillic Extended',
+				'devanagari' => 'Devanagari',
+				'greek' => 'Greek',
+				'greek-ext' => 'Greek Extended',
+				'khmer' => 'Khmer',
+				'latin' => 'Latin',
+				'latin-ext' => 'Latin Extended',
+				'vietnamese' => 'Vietnamese',
+				'hebrew' => 'Hebrew',
+				'arabic' => 'Arabic',
+				'bengali' => 'Bengali',
+				'gujarati' => 'Gujarati',
+				'tamil' => 'Tamil',
+				'telugu' => 'Telugu',
+				'thai' => 'Thai',
 			);
 		}
 
@@ -226,26 +226,30 @@ if ( !class_exists( 'Fonts' ) ) {
 		 * @return array
 		 */
 		public static function get_all_variants() {
-			$i18n = l10n_get_strings();
 			return array(
-				'100' => $i18n['ultra-light'],
-				'100italic' => $i18n['ultra-light-italic'],
-				'200' => $i18n['light'],
-				'200italic' => $i18n['light-italic'],
-				'300' => $i18n['book'],
-				'300italic' => $i18n['book-italic'],
-				'regular' => $i18n['regular'],
-				'italic' => $i18n['italic'],
-				'500' => $i18n['medium'],
-				'500italic' => $i18n['medium-italic'],
-				'600' => $i18n['semi-bold'],
-				'600italic' => $i18n['semi-bold-italic'],
-				'700' => $i18n['bold'],
-				'700italic' => $i18n['bold-italic'],
-				'800' => $i18n['extra-bold'],
-				'800italic' => $i18n['extra-bold-italic'],
-				'900' => $i18n['ultra-bold'],
-				'900italic' => $i18n['ultra-bold-italic'],
+				'100' => esc_attr__( 'Ultra-Light 100', 'ctoolkit' ),
+				'100light' => esc_attr__( 'Ultra-Light 100', 'ctoolkit' ),
+				'100italic' => esc_attr__( 'Ultra-Light 100 Italic', 'ctoolkit' ),
+				'200' => esc_attr__( 'Light 200', 'ctoolkit' ),
+				'200italic' => esc_attr__( 'Light 200 Italic', 'ctoolkit' ),
+				'300' => esc_attr__( 'Book 300', 'ctoolkit' ),
+				'300italic' => esc_attr__( 'Book 300 Italic', 'ctoolkit' ),
+				'400' => esc_attr__( 'Normal 400', 'ctoolkit' ),
+				'regular' => esc_attr__( 'Normal 400', 'ctoolkit' ),
+				'italic' => esc_attr__( 'Normal 400 Italic', 'ctoolkit' ),
+				'500' => esc_attr__( 'Medium 500', 'ctoolkit' ),
+				'500italic' => esc_attr__( 'Medium 500 Italic', 'ctoolkit' ),
+				'600' => esc_attr__( 'Semi-Bold 600', 'ctoolkit' ),
+				'600bold' => esc_attr__( 'Semi-Bold 600', 'ctoolkit' ),
+				'600italic' => esc_attr__( 'Semi-Bold 600 Italic', 'ctoolkit' ),
+				'700' => esc_attr__( 'Bold 700', 'ctoolkit' ),
+				'700italic' => esc_attr__( 'Bold 700 Italic', 'ctoolkit' ),
+				'800' => esc_attr__( 'Extra-Bold 800', 'ctoolkit' ),
+				'800bold' => esc_attr__( 'Extra-Bold 800', 'ctoolkit' ),
+				'800italic' => esc_attr__( 'Extra-Bold 800 Italic', 'ctoolkit' ),
+				'900' => esc_attr__( 'Ultra-Bold 900', 'ctoolkit' ),
+				'900bold' => esc_attr__( 'Ultra-Bold 900', 'ctoolkit' ),
+				'900italic' => esc_attr__( 'Ultra-Bold 900 Italic', 'ctoolkit' ),
 			);
 		}
 

@@ -50,11 +50,18 @@ jQuery(function ($) {
 
     'use strict';
 
+    /**
+     * Field Image Picker
+     */
+    if (document.getElementsByClassName('ctoolkit-image_picker').length) {
+        $('.ctoolkit-image_picker').ctoolkitImagePicker();
+    }
+
     if (document.getElementsByClassName('ctoolkit-icon_picker').length) {
         $('#widgets-right .customize-control .ctoolkit-icon_picker:not(.child-field) select').fontIconPicker();
     }
-    
-    
+
+
     if (document.getElementsByClassName('ctoolkit-datetime').length) {
         $('#widgets-right .ctoolkit-datetime input').each(function () {
             var data = $(this).data();
@@ -122,6 +129,11 @@ jQuery(function ($) {
             $(this).closest('div').find('.ctoolkit_value').val($(this).val()).trigger('change');
         });
     }
+    
+    
+    if(document.getElementsByClassName('ctoolkit-multitext').length){
+        $('.ctoolkit-multitext').ctoolkitMultitext();
+    }
 });
 
 (function ($) {
@@ -145,19 +157,20 @@ jQuery(function ($) {
                                 if (item.type == 'checkbox_multiple' && typeof _value == 'string' && _value != '') {
                                     _value = _value.split(',');
                                 }
-
-
-
-                                if (typeof value.values == 'object' && typeof _value == 'object') {
+                                
+                                if (typeof value.values == 'object') {
 
                                     var flag = false;
 
-                                    if (value.values.length == 1) {
+                                    if (typeof _value == 'string') {
+                                        if ($.inArray(_value, value.values) >= 0) {
+                                            flag = true;
+                                        }
+                                    } else if (value.values.length == 1) {
                                         if ($.inArray(value.values[0], _value) >= 0) {
                                             flag = true;
                                         }
                                     } else {
-
                                         var arr = [];
                                         var arr1 = value.values;
                                         var arr2 = Object.values(_value);

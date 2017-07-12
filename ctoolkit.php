@@ -7,7 +7,7 @@
  * @link https://github.com/vutuansw/ctoolkit/
  * @package ctoolkit
  * @license http://www.gnu.org/licenses/gpl-3.0.html
- * @version 1.0
+ * @version 1.1
  */
 
 namespace ctoolkit;
@@ -18,7 +18,7 @@ class cToolkit {
 
 	public function __construct() {
 
-		$this->version = '1.0';
+		$this->version = '1.1';
 
 		$this->defined();
 		$this->includes();
@@ -45,9 +45,9 @@ class cToolkit {
 	}
 
 	public function includes() {
-		include CTOOLKIT_DIR . 'inc/helpers.php';
 		include CTOOLKIT_DIR . 'inc/fontawesome.php';
 		include CTOOLKIT_DIR . 'inc/Fonts.php';
+		include CTOOLKIT_DIR . 'inc/helpers.php';
 		include CTOOLKIT_DIR . 'inc/Panel.php';
 		include CTOOLKIT_DIR . 'inc/Section.php';
 		include CTOOLKIT_DIR . 'inc/Field.php';
@@ -64,7 +64,9 @@ class cToolkit {
 		$this->register_customize_field( 'Link' );
 		$this->register_customize_field( 'Autocomplete' );
 		$this->register_customize_field( 'Datetime' );
-
+		$this->register_customize_field( 'Gallery' );
+		$this->register_customize_field( 'Heading' );
+		$this->register_customize_field( 'Multitext' );
 		$this->set_control_types();
 	}
 
@@ -88,7 +90,9 @@ class cToolkit {
 			'ctoolkit_datetime' => '\ctoolkit\field\Datetime',
 			'ctoolkit_typography' => '\ctoolkit\field\Typography',
 			'ctoolkit_autocomplete' => '\ctoolkit\field\Autocomplete',
-			'ctoolkit_heading' => '\ctoolkit\field\Heading'
+			'ctoolkit_heading' => '\ctoolkit\field\Heading',
+			'ctoolkit_gallery' => '\ctoolkit\field\Gallery',
+			'ctoolkit_multitext' => '\ctoolkit\field\Multitext',
 				) );
 
 		// Make sure the defined classes actually exist.
@@ -165,57 +169,9 @@ class cToolkit {
 						wp_enqueue_style( 'selectize-skin', CTOOLKIT_URL . 'assets/vendors/selectize/selectize.default' . $min . '.css', null, CTOOLKIT_VERSION );
 
 						if ( $type == 'typography' ) {
-							$localize['subsets'] = array(
-								'cyrillic' => esc_attr__( 'Cyrillic', 'ctoolkit' ),
-								'cyrillic-ext' => esc_attr__( 'Cyrillic Extended', 'ctoolkit' ),
-								'devanagari' => esc_attr__( 'Devanagari', 'ctoolkit' ),
-								'greek' => esc_attr__( 'Greek', 'ctoolkit' ),
-								'greek-ext' => esc_attr__( 'Greek Extended', 'ctoolkit' ),
-								'khmer' => esc_attr__( 'Khmer', 'ctoolkit' ),
-								'latin' => esc_attr__( 'Latin', 'ctoolkit' ),
-								'latin-ext' => esc_attr__( 'Latin Extended', 'ctoolkit' ),
-								'vietnamese' => esc_attr__( 'Vietnamese', 'ctoolkit' ),
-								'hebrew' => esc_attr__( 'Hebrew', 'ctoolkit' ),
-								'arabic' => esc_attr__( 'Arabic', 'ctoolkit' ),
-								'bengali' => esc_attr__( 'Bengali', 'ctoolkit' ),
-								'gujarati' => esc_attr__( 'Gujarati', 'ctoolkit' ),
-								'tamil' => esc_attr__( 'Tamil', 'ctoolkit' ),
-								'telugu' => esc_attr__( 'Telugu', 'ctoolkit' ),
-								'thai' => esc_attr__( 'Thai', 'ctoolkit' ),
-							);
+							$localize['subsets'] = Fonts::get_google_font_subsets();
 
-							$localize['variants'] = array(
-								'100' => esc_attr__( 'Thin', 'ctoolkit' ),
-								'100italic' => esc_attr__( 'Thin Italic', 'ctoolkit' ),
-								'300' => esc_attr__( 'Light', 'ctoolkit' ),
-								'300italic' => esc_attr__( 'Light Italic', 'ctoolkit' ),
-								'400' => esc_attr__( 'Normal 400', 'ctoolkit' ),
-								'400italic' => esc_attr__( 'Normal 400 Italic', 'ctoolkit' ),
-								'500' => esc_attr__( 'Medium 500', 'ctoolkit' ),
-								'500italic' => esc_attr__( 'Medium 500 Italic', 'ctoolkit' ),
-								'700' => esc_attr__( 'Bold 700', 'ctoolkit' ),
-								'700italic' => esc_attr__( 'Bold 700 Italic', 'ctoolkit' ),
-								'900' => esc_attr__( 'Black 900', 'ctoolkit' ),
-								'900italic' => esc_attr__( 'Black 900 Italic', 'ctoolkit' ),
-								'ultra-light' => esc_attr__( 'Ultra-Light 100', 'ctoolkit' ),
-								'ultra-light-italic' => esc_attr__( 'Ultra-Light 100 Italic', 'ctoolkit' ),
-								'light' => esc_attr__( 'Light 200', 'ctoolkit' ),
-								'light-italic' => esc_attr__( 'Light 200 Italic', 'ctoolkit' ),
-								'book' => esc_attr__( 'Book 300', 'ctoolkit' ),
-								'book-italic' => esc_attr__( 'Book 300 Italic', 'ctoolkit' ),
-								'regular' => esc_attr__( 'Normal 400', 'ctoolkit' ),
-								'italic' => esc_attr__( 'Normal 400 Italic', 'ctoolkit' ),
-								'medium' => esc_attr__( 'Medium 500', 'ctoolkit' ),
-								'medium-italic' => esc_attr__( 'Medium 500 Italic', 'ctoolkit' ),
-								'semi-bold' => esc_attr__( 'Semi-Bold 600', 'ctoolkit' ),
-								'semi-bold-italic' => esc_attr__( 'Semi-Bold 600 Italic', 'ctoolkit' ),
-								'bold' => esc_attr__( 'Bold 700', 'ctoolkit' ),
-								'bold-italic' => esc_attr__( 'Bold 700 Italic', 'ctoolkit' ),
-								'extra-bold' => esc_attr__( 'Extra-Bold 800', 'ctoolkit' ),
-								'extra-bold-italic' => esc_attr__( 'Extra-Bold 800 Italic', 'ctoolkit' ),
-								'ultra-bold' => esc_attr__( 'Ultra-Bold 900', 'ctoolkit' ),
-								'ultra-bold-italic' => esc_attr__( 'Ultra-Bold 900 Italic', 'ctoolkit' ),
-							);
+							$localize['variants'] = Fonts::get_all_variants();
 
 							$localize['fonts'] = Fonts::get_all_fonts_reordered();
 						}

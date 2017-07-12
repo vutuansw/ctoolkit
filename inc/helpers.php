@@ -37,103 +37,6 @@ function parse_multi_attribute( $value, $default = array() ) {
 }
 
 /**
- * Shortcut method to get the translation strings
- * @since 1.0
- * @param string $config_id The config ID.
- * @return array
- */
-function l10n_get_strings( $config_id = 'global' ) {
-
-	$translation_strings = array(
-		'background-color' => esc_attr__( 'Background Color', 'ctoolkit' ),
-		'background-image' => esc_attr__( 'Background Image', 'ctoolkit' ),
-		'no-repeat' => esc_attr__( 'No Repeat', 'ctoolkit' ),
-		'repeat-all' => esc_attr__( 'Repeat All', 'ctoolkit' ),
-		'repeat-x' => esc_attr__( 'Repeat Horizontally', 'ctoolkit' ),
-		'repeat-y' => esc_attr__( 'Repeat Vertically', 'ctoolkit' ),
-		'inherit' => esc_attr__( 'Inherit', 'ctoolkit' ),
-		'background-repeat' => esc_attr__( 'Background Repeat', 'ctoolkit' ),
-		'cover' => esc_attr__( 'Cover', 'ctoolkit' ),
-		'contain' => esc_attr__( 'Contain', 'ctoolkit' ),
-		'background-size' => esc_attr__( 'Background Size', 'ctoolkit' ),
-		'fixed' => esc_attr__( 'Fixed', 'ctoolkit' ),
-		'scroll' => esc_attr__( 'Scroll', 'ctoolkit' ),
-		'background-attachment' => esc_attr__( 'Background Attachment', 'ctoolkit' ),
-		'left-top' => esc_attr__( 'Left Top', 'ctoolkit' ),
-		'left-center' => esc_attr__( 'Left Center', 'ctoolkit' ),
-		'left-bottom' => esc_attr__( 'Left Bottom', 'ctoolkit' ),
-		'right-top' => esc_attr__( 'Right Top', 'ctoolkit' ),
-		'right-center' => esc_attr__( 'Right Center', 'ctoolkit' ),
-		'right-bottom' => esc_attr__( 'Right Bottom', 'ctoolkit' ),
-		'center-top' => esc_attr__( 'Center Top', 'ctoolkit' ),
-		'center-center' => esc_attr__( 'Center Center', 'ctoolkit' ),
-		'center-bottom' => esc_attr__( 'Center Bottom', 'ctoolkit' ),
-		'background-position' => esc_attr__( 'Background Position', 'ctoolkit' ),
-		'background-opacity' => esc_attr__( 'Background Opacity', 'ctoolkit' ),
-		'on' => esc_attr__( 'ON', 'ctoolkit' ),
-		'off' => esc_attr__( 'OFF', 'ctoolkit' ),
-		'all' => esc_attr__( 'All', 'ctoolkit' ),
-		'serif' => _x( 'Serif', 'font style', 'ctoolkit' ),
-		'sans-serif' => _x( 'Sans Serif', 'font style', 'ctoolkit' ),
-		'monospace' => _x( 'Monospace', 'font style', 'ctoolkit' ),
-		'font-family' => esc_attr__( 'Font Family', 'ctoolkit' ),
-		'font-size' => esc_attr__( 'Font Size', 'ctoolkit' ),
-		'font-weight' => esc_attr__( 'Font Weight', 'ctoolkit' ),
-		'line-height' => esc_attr__( 'Line Height', 'ctoolkit' ),
-		'font-style' => esc_attr__( 'Font Style', 'ctoolkit' ),
-		'letter-spacing' => esc_attr__( 'Letter Spacing', 'ctoolkit' ),
-		'top' => esc_attr__( 'Top', 'ctoolkit' ),
-		'bottom' => esc_attr__( 'Bottom', 'ctoolkit' ),
-		'left' => esc_attr__( 'Left', 'ctoolkit' ),
-		'right' => esc_attr__( 'Right', 'ctoolkit' ),
-		'center' => esc_attr__( 'Center', 'ctoolkit' ),
-		'justify' => esc_attr__( 'Justify', 'ctoolkit' ),
-		'color' => esc_attr__( 'Color', 'ctoolkit' ),
-		'add-image' => esc_attr__( 'Add Image', 'ctoolkit' ),
-		'change-image' => esc_attr__( 'Change Image', 'ctoolkit' ),
-		'no-image-selected' => esc_attr__( 'No Image Selected', 'ctoolkit' ),
-		'add-file' => esc_attr__( 'Add File', 'ctoolkit' ),
-		'change-file' => esc_attr__( 'Change File', 'ctoolkit' ),
-		'no-file-selected' => esc_attr__( 'No File Selected', 'ctoolkit' ),
-		'remove' => esc_attr__( 'Remove', 'ctoolkit' ),
-		'select-font-family' => esc_attr__( 'Select a font-family', 'ctoolkit' ),
-		'variant' => esc_attr__( 'Variant', 'ctoolkit' ),
-		'subsets' => esc_attr__( 'Subset', 'ctoolkit' ),
-		'size' => esc_attr__( 'Size', 'ctoolkit' ),
-		'height' => esc_attr__( 'Height', 'ctoolkit' ),
-		'spacing' => esc_attr__( 'Spacing', 'ctoolkit' ),
-		'invalid-value' => esc_attr__( 'Invalid Value', 'ctoolkit' ),
-		'add-new' => esc_attr__( 'Add new', 'ctoolkit' ),
-		'row' => esc_attr__( 'row', 'ctoolkit' ),
-		'limit-rows' => esc_attr__( 'Limit: %s rows', 'ctoolkit' ),
-		'open-section' => esc_attr__( 'Press return or enter to open this section', 'ctoolkit' ),
-		'back' => esc_attr__( 'Back', 'ctoolkit' ),
-		'reset-with-icon' => sprintf( esc_attr__( '%s Reset', 'ctoolkit' ), '<span class="dashicons dashicons-image-rotate"></span>' ),
-		'text-align' => esc_attr__( 'Text Align', 'ctoolkit' ),
-		'text-transform' => esc_attr__( 'Text Transform', 'ctoolkit' ),
-		'none' => esc_attr__( 'None', 'ctoolkit' ),
-		'capitalize' => esc_attr__( 'Capitalize', 'ctoolkit' ),
-		'uppercase' => esc_attr__( 'Uppercase', 'ctoolkit' ),
-		'lowercase' => esc_attr__( 'Lowercase', 'ctoolkit' ),
-		'initial' => esc_attr__( 'Initial', 'ctoolkit' ),
-		'select-page' => esc_attr__( 'Select a Page', 'ctoolkit' ),
-		'open-editor' => esc_attr__( 'Open Editor', 'ctoolkit' ),
-		'close-editor' => esc_attr__( 'Close Editor', 'ctoolkit' ),
-		'switch-editor' => esc_attr__( 'Switch Editor', 'ctoolkit' ),
-		'hex-value' => esc_attr__( 'Hex Value', 'ctoolkit' ),
-	);
-
-	$config = apply_filters( 'ctoolkit_config', array() );
-
-	if ( isset( $config['i18n'] ) ) {
-		$translation_strings = wp_parse_args( $config['i18n'], $translation_strings );
-	}
-
-
-	return apply_filters( 'ctoolkit_' . $config_id . '_l10n', $translation_strings );
-}
-
-/**
  * Sanitize checkbox is multiple
  * @since 1.0
  * @return array
@@ -152,36 +55,71 @@ function sanitize_checkbox_multiple( $value ) {
 }
 
 /**
- * Convert typography from string to array
- * 
+ * Sanitize font-weight
  * @param string $value
- *
- * @since 1.0
- * @return array
+ * @return string
  */
-function build_typography( $value ) {
-	$subfields = array(
-		'font-family' => '',
-		'variants' => '',
-		'subsets' => '',
-		'line-height' => '',
-		'font-size' => '',
-		'letter-spacing' => '',
-		'text-transform' => ''
+function sanitize_font_weight( $value ) {
+
+	$value = str_replace( '0light', '0', $value );
+	$value = str_replace( '0italic', '0', $value );
+	$value = str_replace( '0bold', '0', $value );
+	//$value = str_replace( 'regular', 'normal', $value );
+	
+	$arr = array(
+		'100',
+		'200',
+		'300',
+		'400',
+		'500',
+		'600',
+		'700',
+		'800',
+		'900',
+		'initial',
+		'lighter',
+		'normal',
+		'bolder',
+		'inherit',
 	);
 
-	if ( !empty( $value ) ) {
-		$value = json_decode( urldecode( $value ), true );
-		if ( is_array( $value ) ) {
-			$value = wp_parse_args( $value, $subfields );
-			return $value;
+	if ( !in_array( $value, $arr ) ) {
+		return '';
+	}
+
+	return $value;
+}
+
+/**
+ * Convert typography to css properties
+ * @since 1.1
+ * @param string $value Typography value
+ * @return array Css properties
+ */
+function typography_to_css( $value ) {
+
+	$css = array();
+
+	$typo = build_typography( $value );
+	
+	foreach ( $typo as $key => $val ) {
+		if ( !empty( $val ) ) {
+			if ( $key == 'variants' ) {
+				$key = 'font-weight';
+				if ( is_array( $val ) ) {
+					$val = $val[0];
+				}
+
+				$val = sanitize_font_weight( $val );
+			}
+			if ( $key != 'subsets' ) {
+				$css[] = $key . ':' . $val;
+			}
 		}
 	}
 
-	return $subfields;
+	return $css;
 }
-
-
 
 /**
  * Autocomplete ajax post type
@@ -270,4 +208,132 @@ function link_editor_hidden() {
 	echo '<textarea id="content" class="hide hidden"></textarea>';
 	require_once ABSPATH . "wp-includes/class-wp-editor.php";
 	\_WP_Editors::wp_link_dialog();
+}
+
+/**
+ * Get gallery from field gallery value
+ * @since 1.1
+ * @return array
+ */
+function get_gallery_image_ids( $value ) {
+	if ( !empty( $value ) ) {
+		$ids = array();
+		$value = explode( ',', $value );
+		foreach ( $value as $img ) {
+			$img = explode( '|', $img );
+			$ids[] = $img[0];
+		}
+		return $ids;
+	}
+	return array();
+}
+
+/**
+ * Sanitize text-transform css value
+ * @since 1.1
+ * 
+ * @return string $value
+ * @return string Value sanitized
+ */
+function sanitize_text_transform( $value ) {
+
+	$arr = array( 'none', 'capitalize', 'uppercase', 'lowercase', 'initial' );
+
+	if ( !in_array( $value, $arr ) ) {
+		return '';
+	}
+
+	return $value;
+}
+
+/**
+ * Sanitize font variants value
+ * @since 1.1
+ * 
+ * @return string $value
+ * @return string Value sanitized
+ */
+function sanitize_font_variants( $value ) {
+	
+	$variants = Fonts::get_all_variants();
+
+	if ( is_string( $value ) && !array_key_exists( $value, $variants ) ) {
+		return '';
+	}
+	return $value;
+}
+
+/**
+ * Sanitize font subsets value
+ * @since 1.1
+ * 
+ * @return string $value
+ * @return string Value sanitized
+ */
+function sanitize_font_subsets( $value ) {
+	$subsets = Fonts::get_google_font_subsets();
+	if ( is_string( $value ) && !array_key_exists( $value, $subsets ) ) {
+		return '';
+	}
+
+	return $value;
+}
+
+/**
+ * Convert typography from string to array
+ * 
+ * @param string $value
+ *
+ * @since 1.1
+ * @return array Typography value
+ */
+function build_typography( $value ) {
+	
+	$subfields = array(
+		'font-family' => '',
+		'variants' => '',
+		'subsets' => '',
+		'line-height' => '',
+		'font-size' => '',
+		'letter-spacing' => '',
+		'text-transform' => '',
+		'color' => ''
+	);
+
+	if ( is_string( $value ) ) {
+		$value = json_decode( urldecode( $value ), true );
+	}
+	
+	if ( empty( $value ) ) {
+		$value = $subfields;
+	}
+
+	if ( is_array( $value ) ) {
+		$value = wp_parse_args( $value, $subfields );
+	}
+
+	$value['font-family'] = \sanitize_text_field( $value['font-family'] );
+	$value['variants'] = sanitize_font_variants( $value['variants'] );
+	$value['subsets'] = sanitize_font_subsets( $value['subsets'] );
+	$value['line-height'] = \sanitize_text_field( $value['line-height'] );
+	$value['font-size'] = \sanitize_text_field( $value['font-size'] );
+	$value['letter-spacing'] = \sanitize_text_field( $value['letter-spacing'] );
+	$value['text-transform'] = sanitize_text_transform( $value['text-transform'] );
+	$value['color'] = \sanitize_hex_color( $value['color'] );
+
+	return $value;
+}
+
+/**
+ * Sanitize typography array to string field
+ * 
+ * @param string $value
+ *
+ * @since 1.1
+ * @return string urlencode json_encode
+ */
+function sanitize_typography_field( $value ) {
+
+	$value = build_typography( $value );
+	return urlencode( json_encode( $value ) );
 }

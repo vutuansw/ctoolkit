@@ -46,11 +46,16 @@ class Panel {
 
 		$defaults = array(
 			'id' => '',
-			'title' => '',
+			'heading' => '',
 			'description' => '', // Include html tags such as <p>.
 			'priority' => 160, // Mixed with top-level-section hierarchy.
 		);
-
+		
+		if ( isset( $args['heading'] ) ) {
+			$args['title'] = $args['heading'];
+			unset( $args['heading'] );
+		}
+		
 		$args = wp_parse_args( $args, $defaults );
 
 		$this->wp_customize->add_panel( $args['id'], $args );
@@ -62,7 +67,9 @@ class Panel {
 	 * @param Section|array $section Section Class or array settings
 	 */
 	public function add_section( $args = array() ) {
+		
 		$args['panel'] = $this->id();
+		
 		new Section( $this->wp_customize, $args );
 	}
 

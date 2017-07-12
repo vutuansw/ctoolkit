@@ -9,9 +9,9 @@ namespace ctoolkit\field;
  * @class     Link
  * @package   ctoolkit\field
  * @category  Class
- * @author    vutuansw
+ * @author    vutuansw <vutuan.sw@gmail.com>
  * @license   GPLv3
- * @version   1.0
+ * @since   1.0
  */
 
 /**

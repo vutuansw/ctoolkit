@@ -12,6 +12,140 @@ jQuery(function ($) {
 
     var $document = $(document);
 
+    /**
+     * @sine 1.1
+     */
+    $.fn.ctoolkitImagePicker = function () {
+
+        var file_frames = {};
+
+        var get_ids = function (input_value) {
+            var ids = [];
+            if (input_value != '') {
+                var arr = input_value.split(',');
+                for (var i in arr) {
+                    var obj = arr[i].split('|');
+                    ids.push(obj[0]);
+                }
+            }
+            return ids;
+        }
+
+        $document.on('click', '.ctoolkit-image_picker .add_images', function (e) {
+
+            e.preventDefault();
+            var $this = $(this);
+            var $field = $this.closest('.ctoolkit-image_picker');
+            var $input = $field.find('input[type="hidden"]');
+            if (file_frames[$field.attr('id')]) {
+                file_frames[$field.attr('id')].open();
+                return;
+            }
+
+            file_frames[$field.attr('id')] = wp.media.frames.file_frame = wp.media({
+                title: 'Add Images',
+                button: {
+                    text: 'Add Images'
+                },
+                library: {
+                    type: 'image'
+                },
+                multiple: $field.data('multiple')
+            });
+
+            file_frames[$field.attr('id')].on('open', function () {
+
+                var ids, selection;
+                ids = get_ids($input.val());
+                if ('' != ids) {
+                    selection = file_frames[$field.attr('id')].state().get('selection');
+                    $(ids).each(function (index, element) {
+                        var attachment;
+                        attachment = wp.media.attachment(element);
+                        attachment.fetch();
+                        selection.add(attachment ? [attachment] : []);
+                    });
+                }
+            });
+
+            file_frames[$field.attr('id')].on('select', function () {
+
+                var result, selection;
+                result = [];
+                selection = file_frames[$field.attr('id')].state().get('selection');
+                var ids = get_ids($input.val());
+
+                var item = '';
+                selection.map(function (attachment) {
+
+                    attachment = attachment.toJSON();
+                    var src = attachment.sizes.hasOwnProperty('thumbnail') ? attachment.sizes.thumbnail.url : attachment.url;
+                    if (ids == '' || $.inArray(attachment.id.toString(), ids) === -1) {
+                        item += '<li class="added" data-id="' + attachment.id + '">\n\
+                                    <div class="inner">\n\
+                                        <img alt="' + attachment.title + '" src="' + src + '"/>\n\
+                                    </div>\n\
+                                    <a href="#" class="remove"></a>\n\
+                                </li>';
+                        src = src.replace(ctoolkit_var.upload_url, '');
+                        result.push(attachment.id + '|' + encodeURIComponent(src));
+                    }
+
+                });
+
+
+                if (result.length > 0) {
+                    if ($field.data('multiple')) {
+                        if (ids != '') {
+                            result = ids.concat(result);
+                        }
+                        $field.find('.image_list').append(item);
+                    } else {
+                        $field.find('.image_list').html(item);
+                    }
+
+                    $input.val(result).change();
+                }
+            });
+
+            file_frames[$field.attr('id')].open();
+        });
+
+
+        $document.on('click', '.ctoolkit-image_picker .remove', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $input = $this.closest('.ctoolkit-image_picker').find('input[type="hidden"]');
+            var ids = $input.val();
+            var index = $this.closest('li').index();
+            if (ids != '') {
+                ids = ids.split(',');
+                delete ids[index];
+                ids = ids.filter(function (val) {
+                    return val;
+                });
+            }
+
+            $input.val(ids).trigger('change');
+            $this.closest('li').remove();
+        });
+
+
+        if ($.fn.sortable) {
+            $('.ctoolkit-image_picker .image_list').sortable({
+                stop: function (e, ui) {
+                    var ids = [];
+                    var $list = $(ui.item[0]).parent();
+                    $list.find('li').each(function () {
+                        ids.push($(this).attr('data-id'));
+                    });
+                    $list.closest('.ctoolkit-image_picker').find('input[type="hidden"]').val(ids).change();
+                }
+            });
+        }
+    }
+
+
     $.fn.ctoolkitLink = function () {
 
         $document.on('click', '.ctoolkit-link .link_button', function (e) {
@@ -131,8 +265,8 @@ jQuery(function ($) {
             var $variants = $wrapper.find('.variants select');
             var $subsets_selectize = $subsets[0].selectize;
             var $variants_selectize = $variants[0].selectize;
-
-            if (data.variants != '') {
+          
+            if (data.hasOwnProperty('variants') && data.variants != '') {
 
                 var variants = data.variants.split(',');
                 var options = [];
@@ -163,7 +297,7 @@ jQuery(function ($) {
                 $variants_selectize.disable();
             }
 
-            if (data.subsets != '') {
+            if (data.hasOwnProperty('subsets') && data.subsets != '') {
 
                 var subsets = data.subsets.split(',');
                 var options = [];
@@ -220,10 +354,18 @@ jQuery(function ($) {
                     if (text != '') {
 
                         if (_typography_data.hasOwnProperty('variants')) {
-                            _typography_data.variants = value.join(',');
+
+                            if (typeof value == 'object' && value != null) {
+                                _typography_data.variants = value.join(',');
+
+                            } else {
+                                _typography_data.variants = value;
+                            }
 
                             var val = encodeURIComponent(JSON.stringify(_typography_data));
+
                             typography_data[id] = _typography_data;
+                            
                             $field.find('.ctoolkit_value').val(val).change();
 
                         }
@@ -247,7 +389,11 @@ jQuery(function ($) {
 
                     if (text != '') {
                         if (_typography_data.hasOwnProperty('subsets')) {
-                            _typography_data['subsets'] = value.join(',');
+                            if (typeof value == 'object' && value != null) {
+                                _typography_data.subsets = value.join(',');
+                            } else {
+                                _typography_data.subsets = value;
+                            }
                             var val = encodeURIComponent(JSON.stringify(_typography_data));
                             typography_data[id] = _typography_data;
                             $field.find('.ctoolkit_value').val(val).change();
@@ -293,10 +439,6 @@ jQuery(function ($) {
 
                 is_font_changed = true;
 
-                if (value == '') {
-                    return;
-                }
-
                 var $field = $(this)[0].$wrapper.closest('.ctoolkit-typography');
 
                 var id = $field.data('id');
@@ -309,7 +451,9 @@ jQuery(function ($) {
 
                 } else {
 
-                    font_changed($field, this.options[value], function (data) {
+                    var input = this.options.hasOwnProperty(value) ? this.options[value] : {};
+
+                    font_changed($field, input, function (data) {
 
                         _typography_data['font-family'] = data['font-family'];
                         _typography_data['subsets'] = data['subsets'];
@@ -329,6 +473,14 @@ jQuery(function ($) {
             }
         });
 
+        if ($typography.find('.subrow .color').length) {
+            $typography.find('.subrow .color input').wpColorPicker({
+                change: function (e, ui) {
+                    $(e.target).val(ui.color.toString()).change();
+                }
+            });
+        }
+
         $typography.on('change', '.subrow input, .subrow select', function (e) {
 
             var key = $(this).data('key');
@@ -341,14 +493,11 @@ jQuery(function ($) {
 
             var value = $this.val();
 
-            if (value != '') {
+            typography_data[id][key] = value;
 
-                typography_data[id][key] = $this.val();
+            var val = encodeURIComponent(JSON.stringify(typography_data[id]));
 
-                var val = encodeURIComponent(JSON.stringify(typography_data[id]));
-
-                $field.find('.ctoolkit_value').val(val).change();
-            }
+            $field.find('.ctoolkit_value').val(val).change();
 
             e.preventDefault();
         });
@@ -398,5 +547,79 @@ jQuery(function ($) {
             }
         });
     };
-    
+
+    $.fn.ctoolkitMultitext = function () {
+
+
+        var $el = $(this);
+
+        var $template = $el.find('.multitext-item').clone();
+        $template.find('input').val('');
+
+        var update_value = function (e, val) {
+            var value = [];
+            var $parent = $(e.target).closest('.ctoolkit-multitext');
+            var $items = $parent.find('li');
+            var $input = $parent.find('.ctoolkit_value');
+
+            if (typeof val != 'undefined') {
+
+                $input.val('').change();
+
+            } else {
+
+                $items.each(function () {
+                    var _val = $(this).find('input').val();
+                    if (_val != '') {
+                        value.push($(this).find('input').val());
+                    }
+                });
+
+                if (value.length) {
+                    $input.val(encodeURIComponent(JSON.stringify(value))).change();
+                } else {
+                    $input.val('').change();
+                }
+            }
+
+        };
+
+        $el.on('change', '.multitext-item input', function (e) {
+            update_value(e);
+        });
+
+        $el.on('click', '.addnew', function (e) {
+            var $this = $(this);
+            var $list = $this.closest('.ctoolkit-multitext').find('ul');
+            $list.append('<li class="multitext-item">' + $template.html( ) + '</li>');
+            e.preventDefault();
+        });
+
+        $el.on('click', '.remove', function (e) {
+            var $this = $(this);
+            var $list = $this.closest('ul');
+            var $item = $this.closest('.multitext-item');
+            if ($list.find('.multitext-item').length > 1) {
+                $item.remove();
+                update_value(e);
+            } else {
+                $item.find('input').val('').focus();
+                update_value(e, '');
+            }
+
+
+            e.preventDefault();
+        });
+
+        if ($.fn.sortable) {
+            $el.find('ul').sortable({
+                items: '.multitext-item',
+                handle: '.short',
+                stop: function (e, ui) {
+                    update_value(e);
+                }
+            });
+        }
+    }
+
 });

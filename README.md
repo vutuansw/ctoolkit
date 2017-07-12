@@ -51,11 +51,11 @@ cTolkit saves development time
 
 ## Changelog ##
 
-#### 1.1 (July 12, 2017):####
+#### 1.1 (July 12, 2017): ####
 * Add Gallery Field    
 * Add Multi textfield    
 * Add some helper functions    
 
 
-#### 1.0 (June 22, 2017):####
+#### 1.0 (June 22, 2017): ####
 * Initial version
